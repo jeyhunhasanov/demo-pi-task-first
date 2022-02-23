@@ -1,4 +1,4 @@
-import {Action, Component, Getter, Provide, Vue, Watch} from 'nuxt-property-decorator'
+import {Action, Component, Getter, Provide, Ref, Vue, Watch} from 'nuxt-property-decorator'
 // Mixins
 import LoadingMixin from '~/mixins/LoadingMixin'
 import ValidationsMixin from '~/mixins/ValidationsMixin'
@@ -15,6 +15,12 @@ import {EnumGenderType, EnumStatusType} from '~/enums'
   mixins: [LoadingMixin, ValidationsMixin]
 })
 class UserList extends Vue {
+  // region Refs
+
+  @Ref('formValidationFilter') refFormValidationFilter!: HTMLFormElement
+
+  // endregion
+
   // region Provide
 
   @Provide() enumGenderType: ModelEnumGenderType = EnumGenderType
@@ -39,6 +45,15 @@ class UserList extends Vue {
 
   triggerFetchUsers(queryParams?: ModelUserQueryParams) {
     this.fetchUsers(queryParams)
+  }
+
+  btnFilter() {
+    this.triggerFetchUsers(this.queryParams)
+  }
+
+  btnResetFilter() {
+    this.refFormValidationFilter.reset()
+    this.triggerFetchUsers()
   }
 
   // endregion

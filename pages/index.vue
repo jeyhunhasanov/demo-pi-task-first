@@ -3,6 +3,62 @@
     <v-card>
       <v-card-title class="headline"> İstifadəçilər ({{ paginationTotal }})</v-card-title>
     </v-card>
+    <v-card class="mt-5">
+      <v-card-text>
+        <v-form ref="formValidationFilter">
+          <v-row align="center">
+            <v-col cols="12" md="3" sm="6">
+              <v-text-field
+                v-model="queryParams.name"
+                :color="$colors.green"
+                dense
+                hide-details
+                label="Ad"
+                outlined
+                @keyup.enter="btnFilter()"
+              />
+            </v-col>
+            <v-col cols="12" md="3" sm="6">
+              <v-text-field
+                v-model="queryParams.email"
+                :color="$colors.green"
+                dense
+                hide-details
+                label="Email"
+                outlined
+                @keyup.enter="btnFilter()"
+              />
+            </v-col>
+            <v-col cols="12" md="3" sm="6">
+              <div>Cins</div>
+              <v-radio-group v-model="queryParams.gender" dense hide-details row>
+                <v-radio :color="$colors.green" :value="null" label="Hamısı" />
+                <v-radio :color="$colors.green" :value="enumGenderType.MALE" label="Kişi" />
+                <v-radio :color="$colors.green" :value="enumGenderType.FEMALE" label="Qadın" />
+              </v-radio-group>
+            </v-col>
+            <v-col cols="12" md="3" sm="6">
+              <div>Status</div>
+              <v-radio-group v-model="queryParams.status" dense hide-details row>
+                <v-radio :color="$colors.green" :value="null" label="Hamısı" />
+                <v-radio :color="$colors.green" :value="enumStatusType.ACTIVE" label="Aktiv" />
+                <v-radio :color="$colors.green" :value="enumStatusType.INACTIVE" label="Passiv" />
+              </v-radio-group>
+            </v-col>
+            <v-col cols="12" md="3" sm="6">
+              <v-btn :color="$colors.green" :loading="sendingRequest" class="white--text" @click="btnFilter()">
+                <v-icon class="mr-1">mdi-filter-outline</v-icon>
+                <span class="text-capitalize">Axtar</span>
+              </v-btn>
+              <v-btn @click="btnResetFilter()">
+                <v-icon class="mr-1">mdi-filter-remove-outline</v-icon>
+                <span class="text-capitalize">Təmizlə</span>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
+      </v-card-text>
+    </v-card>
     <v-divider class="my-5" />
     <v-card elevation="5">
       <v-card-text>
@@ -18,7 +74,7 @@
                 <th class="text-left">Hərəkətlər</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody v-if="users.length">
               <tr v-for="(userItem, userIndex) in users" :key="userIndex">
                 <td>
                   {{ (page - 1) * paginationLimit + ++userIndex }}
@@ -57,6 +113,11 @@
                     <span>Sil</span>
                   </v-tooltip>
                 </td>
+              </tr>
+            </tbody>
+            <tbody v-else>
+              <tr>
+                <td colspan="6" class="text-center">Məlumat yoxdur.</td>
               </tr>
             </tbody>
           </template>
