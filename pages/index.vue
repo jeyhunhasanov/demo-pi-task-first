@@ -98,7 +98,7 @@
                 <td>
                   <v-tooltip left>
                     <template #activator="{on, attrs}">
-                      <v-btn :color="$colors.green" dark v-bind="attrs" x-small v-on="on">
+                      <v-btn :to="`/users/${userItem.id}`" :color="$colors.green" dark v-bind="attrs" x-small v-on="on">
                         <v-icon small>mdi-pencil</v-icon>
                       </v-btn>
                     </template>

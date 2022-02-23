@@ -2,6 +2,7 @@ import restypedAxios, {TypedAxiosRequestConfig} from 'restyped-axios'
 
 import {API} from './project-api'
 import {EventBus} from '@/utils/eventBus'
+import NotifierService from '@/utils/notifier/NotifierService'
 
 const BASE_URL = process.env.BASE_URL
 
@@ -9,6 +10,8 @@ const instance = restypedAxios.create<API>({
   baseURL: BASE_URL,
   timeout: 10000
 })
+
+const $notifier = new NotifierService()
 
 // region Interceptors
 
@@ -39,6 +42,20 @@ instance.interceptors.response.use(
   },
   (error) => {
     EventBus.$emit('loading:disable')
+    const response = error.response
+    const message = response.data.message
+
+    if (message) {
+      $notifier.show({
+        content: message,
+        duration: 3000,
+        type: 'error',
+        placement: {
+          right: true,
+          top: true
+        }
+      })
+    }
     return Promise.reject(error)
   }
 )

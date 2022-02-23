@@ -19,6 +19,7 @@
       <v-container fluid>
         <Nuxt />
       </v-container>
+      <Notifier />
     </v-main>
     <v-footer :color="$colors.blue" app dark>
       <span>&copy; {{ new Date().getFullYear() }}</span>
