@@ -1,4 +1,4 @@
-# pi-second-task
+# demo-pi-second-task
 
 ## Build Setup
 
