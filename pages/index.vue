@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card>
-      <v-card-title class="headline">İstifadəçilər</v-card-title>
+      <v-card-title class="headline"> İstifadəçilər ({{ paginationTotal }})</v-card-title>
     </v-card>
     <v-divider class="my-5" />
     <v-card elevation="5">
@@ -21,7 +21,7 @@
             <tbody>
               <tr v-for="(userItem, userIndex) in users" :key="userIndex">
                 <td>
-                  {{ ++userIndex }}
+                  {{ (page - 1) * paginationLimit + ++userIndex }}
                 </td>
                 <td>{{ userItem.name }}</td>
                 <td>
@@ -61,6 +61,29 @@
             </tbody>
           </template>
         </v-simple-table>
+        <v-row v-if="paginationTotal >= paginationLimit" align="center" class="my-5" justify="center">
+          <v-col cols="12">
+            <v-pagination
+              v-model="page"
+              :color="$colors.green"
+              :length="paginationPages"
+              :total-visible="paginationLimit"
+            />
+          </v-col>
+          <v-col cols="2">
+            <v-autocomplete
+              v-model="page"
+              :color="$colors.green"
+              :items="paginationPagesNumbers"
+              dense
+              height="20"
+              hide-details
+              label="Səhifə"
+              no-data-text="Yoxdur"
+              outlined
+            />
+          </v-col>
+        </v-row>
       </v-card-text>
     </v-card>
   </div>
