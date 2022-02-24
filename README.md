@@ -3,6 +3,9 @@
 ## Build Setup
 
 ```bash
+
+# Node expected version "^12.22.0 || ^14.17.0 || >=16.0.0"
+
 # install dependencies
 $ yarn install
 
