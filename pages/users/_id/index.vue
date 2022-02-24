@@ -47,7 +47,7 @@
                   depressed
                   @click="btnUpdate()"
                 >
-                  <v-icon class="mr-1">mdi-content-save-outline</v-icon>
+                  <v-icon class="mr-1">mdi-check</v-icon>
                   Yadda saxla
                 </v-btn>
               </v-col>

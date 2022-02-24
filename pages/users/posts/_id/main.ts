@@ -15,10 +15,10 @@ import {REGEX_ALLOW_NUMBERS} from '~/constants/regex'
     return REGEX_ALLOW_NUMBERS.test(params.id)
   }
 })
-class UpdateUserPost extends Vue {
+class UserUpdatePost extends Vue {
   // region Refs
 
-  @Ref('formValidationUpdate') refFormValidationUpdate!: HTMLFormElement
+  @Ref('formValidationUpdatePost') refFormValidationUpdatePost!: HTMLFormElement
 
   // endregion
 
@@ -26,12 +26,12 @@ class UpdateUserPost extends Vue {
 
   @Provide() postId: number = 0
 
-  @Provide() requestPostDetails: ModelPost = {
+  @Provide() requestUpdatePost: ModelPost = {
     title: '',
     body: ''
   }
 
-  @Provide() formValidationUpdate: boolean = false
+  @Provide() formValidationUpdatePost: boolean = false
 
   // endregion
 
@@ -51,11 +51,11 @@ class UpdateUserPost extends Vue {
     this.fetchPostDetails(userId)
   }
 
-  btnUpdate() {
-    if (this.refFormValidationUpdate.validate()) {
+  btnUpdatePost() {
+    if (this.refFormValidationUpdatePost.validate()) {
       this.fetchUpdatePost({
         postId: this.postId,
-        body: this.requestPostDetails
+        body: this.requestUpdatePost
       })
     }
   }
@@ -75,8 +75,8 @@ class UpdateUserPost extends Vue {
 
   @Watch('getPostDetails')
   responsePostDetails(postDetails: ModelPost) {
-    this.requestPostDetails.title = postDetails.title
-    this.requestPostDetails.body = postDetails.body
+    this.requestUpdatePost.title = postDetails.title
+    this.requestUpdatePost.body = postDetails.body
   }
 
   @Watch('getUpdatePost')
@@ -95,4 +95,4 @@ class UpdateUserPost extends Vue {
   // endregion
 }
 
-export default UpdateUserPost
+export default UserUpdatePost

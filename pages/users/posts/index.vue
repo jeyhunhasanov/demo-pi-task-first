@@ -77,7 +77,7 @@
                           x-small
                           v-on="on"
                         >
-                          <v-icon small>mdi-pencil</v-icon>
+                          <v-icon small>mdi-pencil-outline</v-icon>
                         </v-btn>
                       </template>
                       <span>Dəyiş</span>
@@ -93,7 +93,7 @@
                           @click="btnDeletingPost(postItem)"
                           v-on="on"
                         >
-                          <v-icon small>mdi-delete</v-icon>
+                          <v-icon small>mdi-delete-outline</v-icon>
                         </v-btn>
                       </template>
                       <span>Sil</span>

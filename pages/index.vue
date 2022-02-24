@@ -179,7 +179,7 @@
                         x-small
                         v-on="on"
                       >
-                        <v-icon small>mdi-pencil</v-icon>
+                        <v-icon small>mdi-pencil-outline</v-icon>
                       </v-btn>
                     </template>
                     <span>Dəyiş</span>
@@ -195,7 +195,7 @@
                         @click="btnDeletingUser(userItem)"
                         v-on="on"
                       >
-                        <v-icon small>mdi-delete</v-icon>
+                        <v-icon small>mdi-delete-outline</v-icon>
                       </v-btn>
                     </template>
                     <span>Sil</span>
@@ -260,7 +260,7 @@
           <v-icon :color="$colors.red" class="mx-auto" size="50">mdi-alert-outline</v-icon>
         </v-card-title>
         <v-card-text>
-          Ad: <strong>{{ selectedUser.name }}m</strong> <br />
+          Ad: <strong>{{ selectedUser.name }}</strong> <br />
           Email: <strong>{{ selectedUser.email }}</strong> <br />
           istifadəçini silmək istədiyinizdən əminsinizmi?
           <div class="mt-7">

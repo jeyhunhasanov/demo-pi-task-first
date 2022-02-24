@@ -1,42 +1,42 @@
 <template>
   <div>
-    <div v-if="requestPostDetails.title">
+    <div v-if="requestUpdatePost.title">
       <v-card>
-        <v-card-title class="headline"> Məqalə - {{ requestPostDetails.title }}</v-card-title>
+        <v-card-title class="headline"> Məqalə - {{ requestUpdatePost.title }}</v-card-title>
       </v-card>
       <v-card class="mt-5">
         <v-card-text>
-          <v-form ref="formValidationUpdate" v-model="formValidationUpdate" lazy-validation>
+          <v-form ref="formValidationUpdatePost" v-model="formValidationUpdatePost" lazy-validation>
             <v-row align="center">
               <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="requestPostDetails.title"
+                  v-model="requestUpdatePost.title"
                   :color="$colors.green"
                   :rules="[...validations.required]"
-                  dense
                   :value="1"
+                  dense
                   label="Başlıq"
                   outlined
-                  @keyup.enter="btnUpdate()"
+                  @keyup.enter="btnUpdatePost()"
                 />
                 <v-textarea
-                  v-model="requestPostDetails.body"
+                  v-model="requestUpdatePost.body"
                   :color="$colors.green"
                   :rules="[...validations.required]"
                   dense
                   label="Məqalə"
                   outlined
-                  @keyup.enter="btnUpdate()"
+                  @keyup.enter="btnUpdatePost()"
                 />
                 <v-btn
                   :color="$colors.green"
-                  :disabled="!formValidationUpdate"
+                  :disabled="!formValidationUpdatePost"
                   :loading="sendingRequest"
                   class="white--text mt-4"
                   depressed
-                  @click="btnUpdate()"
+                  @click="btnUpdatePost()"
                 >
-                  <v-icon class="mr-1">mdi-content-save-outline</v-icon>
+                  <v-icon class="mr-1">mdi-check</v-icon>
                   Yadda saxla
                 </v-btn>
               </v-col>
