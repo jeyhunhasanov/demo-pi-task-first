@@ -1,4 +1,4 @@
-import {Action, Component, Getter, Provide, Ref, Vue} from 'nuxt-property-decorator'
+import {Action, Component, Getter, Provide, Ref, Vue, Watch} from 'nuxt-property-decorator'
 // Mixins
 import LoadingMixin from '~/mixins/LoadingMixin'
 import ValidationsMixin from '~/mixins/ValidationsMixin'
@@ -8,7 +8,13 @@ import {ModelPost, ModelPostQueryParams} from '~/models/post/Post'
 import {ModelPaginationOptions} from '~/models/general/General'
 // Stores
 import {FETCH_USER_DETAILS, GET_USER_DETAILS} from '~/store/user/types'
-import {FETCH_POSTS, GET_POSTS, GET_POSTS_PAGINATION_OPTIONS} from '~/store/post/types'
+import {
+  FETCH_DELETE_POST,
+  FETCH_POSTS,
+  GET_DELETE_POST,
+  GET_POSTS,
+  GET_POSTS_PAGINATION_OPTIONS
+} from '~/store/post/types'
 // Regexes
 import {REGEX_ALLOW_NUMBERS} from '~/constants/regex'
 
@@ -34,6 +40,12 @@ class UserPostsList extends Vue {
 
   @Provide() queryParams: ModelPostQueryParams = {}
 
+  @Provide() dialog: any = {
+    deletePost: false
+  }
+
+  @Provide() selectedPost: ModelPost = {}
+
   // endregion
 
   // region Store
@@ -44,6 +56,9 @@ class UserPostsList extends Vue {
   @Action(FETCH_POSTS, {namespace: 'post'}) fetchPosts!: any
   @Getter(GET_POSTS, {namespace: 'post'}) getPosts!: ModelPost[]
   @Getter(GET_POSTS_PAGINATION_OPTIONS, {namespace: 'post'}) getPostsPaginationOptions!: ModelPaginationOptions
+
+  @Action(FETCH_DELETE_POST, {namespace: 'post'}) fetchDeletePost!: any
+  @Getter(GET_DELETE_POST, {namespace: 'post'}) getDeletePost!: boolean
 
   // endregion
 
@@ -74,6 +89,15 @@ class UserPostsList extends Vue {
   changePage(page: number) {
     this.queryParams.page = page
     this.triggerFetchPosts(this.queryParams)
+  }
+
+  btnDeletingPost(postItem: ModelPost) {
+    this.dialog.deletePost = true
+    this.selectedPost = {...postItem}
+  }
+
+  btnDeletePost() {
+    this.fetchDeletePost(this.selectedPost.id)
   }
 
   // endregion
@@ -124,6 +148,25 @@ class UserPostsList extends Vue {
 
   get isActiveResetFilterBtn() {
     return this.queryParams.title || this.queryParams.body
+  }
+
+  // endregion
+
+  // region Watch
+
+  @Watch('getDeletePost')
+  responseDeletePost() {
+    this.triggerFetchPosts(this.queryParams)
+    this.$notifier.show({
+      content: 'Məqalə silindi.',
+      duration: 3000,
+      type: 'success',
+      placement: {
+        right: true,
+        top: true
+      }
+    })
+    this.dialog.deletePost = false
   }
 
   // endregion

@@ -6,7 +6,7 @@
           <strong>{{ userDetails.name }}</strong>
           &nbsp;adlı istifadəçinin məqalələri ({{ paginationTotal }})
           <v-spacer />
-          <v-btn :color="$colors.green" dark depressed :to="`/users/posts/new?userId=${userDetails.id}`">
+          <v-btn :color="$colors.green" :to="`/users/posts/new?userId=${userDetails.id}`" dark depressed>
             <v-icon class="mr-1">mdi-text-box-plus-outline</v-icon>
             Yeni məqalə
           </v-btn>
@@ -84,7 +84,15 @@
                     </v-tooltip>
                     <v-tooltip right>
                       <template #activator="{on, attrs}">
-                        <v-btn :color="$colors.red" dark depressed v-bind="attrs" x-small v-on="on">
+                        <v-btn
+                          :color="$colors.red"
+                          dark
+                          depressed
+                          v-bind="attrs"
+                          x-small
+                          @click="btnDeletingPost(postItem)"
+                          v-on="on"
+                        >
                           <v-icon small>mdi-delete</v-icon>
                         </v-btn>
                       </template>
@@ -131,6 +139,22 @@
     <v-card v-else>
       <v-card-title class="headline">İstifadəçi tapılmadı</v-card-title>
     </v-card>
+    <!--    Delete user dialog-->
+    <v-dialog v-model="dialog.deletePost" max-width="425" width="100%">
+      <v-card>
+        <v-card-title>
+          <v-icon :color="$colors.red" class="mx-auto" size="50">mdi-alert-outline</v-icon>
+        </v-card-title>
+        <v-card-text>
+          <strong>"{{ selectedPost.title }}"</strong>
+          adlı məqaləni silmək istədiyinizdən əminsinizmi?
+          <div class="mt-7">
+            <v-btn depressed @click="dialog.deletePost = false">Xeyr</v-btn>
+            <v-btn :color="$colors.red" :loading="sendingRequest" dark depressed @click="btnDeletePost()">Bəli</v-btn>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
