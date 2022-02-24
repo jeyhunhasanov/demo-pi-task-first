@@ -1,4 +1,7 @@
-import {Action, Component, Getter, Provide, Vue, Watch} from 'nuxt-property-decorator'
+import {Action, Component, Getter, Provide, Ref, Vue, Watch} from 'nuxt-property-decorator'
+// Mixins
+import LoadingMixin from '~/mixins/LoadingMixin'
+import ValidationsMixin from '~/mixins/ValidationsMixin'
 // Models
 import {ModelUser} from '~/models/user/User'
 import {ModelPost, ModelPostQueryParams} from '~/models/post/Post'
@@ -13,9 +16,16 @@ import {REGEX_ALLOW_NUMBERS} from '~/constants/regex'
   validate({query}) {
     const userId = String(query.userId)
     return REGEX_ALLOW_NUMBERS.test(userId)
-  }
+  },
+  mixins: [LoadingMixin, ValidationsMixin]
 })
 class UserPostsList extends Vue {
+  // region Refs
+
+  @Ref('formValidationFilter') refFormValidationFilter!: HTMLFormElement
+
+  // endregion
+
   // region Provide
 
   @Provide() userId: number = 0
@@ -48,6 +58,16 @@ class UserPostsList extends Vue {
 
   triggerFetchUserDetails(userId: number) {
     this.fetchUserDetails(userId)
+  }
+
+  btnFilter() {
+    this.page = 1
+    this.triggerFetchPosts(this.queryParams)
+  }
+
+  btnResetFilter() {
+    this.refFormValidationFilter.reset()
+    this.triggerFetchPosts()
   }
 
   // endregion
@@ -94,6 +114,10 @@ class UserPostsList extends Vue {
       numbers.push(index)
     }
     return numbers
+  }
+
+  get isInActiveResetFilterBtn() {
+    return this.queryParams.title || this.queryParams.body
   }
 
   // endregion

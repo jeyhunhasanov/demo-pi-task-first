@@ -7,6 +7,41 @@
           &nbsp;adlı istifadəçinin məqalələri ({{ paginationTotal }})
         </v-card-title>
       </v-card>
+      <v-card class="mt-5">
+        <v-card-text>
+          <v-form ref="formValidationFilter" @submit="$event.preventDefault()">
+            <v-row align="center">
+              <v-col cols="12" md="4" sm="6">
+                <v-text-field
+                  v-model="queryParams.title"
+                  :color="$colors.green"
+                  dense
+                  hide-details
+                  label="Başlıq"
+                  outlined
+                  @keyup.enter="btnFilter()"
+                />
+              </v-col>
+              <v-col cols="12" md="3" sm="6">
+                <v-btn
+                  :color="$colors.green"
+                  :loading="sendingRequest"
+                  class="white--text"
+                  depressed
+                  @click="btnFilter()"
+                >
+                  <v-icon class="mr-1">mdi-filter-outline</v-icon>
+                  Axtar
+                </v-btn>
+                <v-btn :disabled="!isInActiveResetFilterBtn" depressed @click="btnResetFilter()">
+                  <v-icon class="mr-1">mdi-filter-remove-outline</v-icon>
+                  Təmizlə
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-card-text>
+      </v-card>
       <v-divider class="my-5" />
       <v-card elevation="5">
         <v-card-text>
