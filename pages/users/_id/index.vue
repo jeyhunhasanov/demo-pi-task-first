@@ -20,8 +20,8 @@
                 />
                 <v-text-field
                   v-model="requestUserDetails.email"
-                  :rules="[...validations.required, ...validations.email]"
                   :color="$colors.green"
+                  :rules="[...validations.required, ...validations.email]"
                   dense
                   label="Email"
                   outlined
@@ -44,10 +44,11 @@
                   :disabled="!formValidationUpdate"
                   :loading="sendingRequest"
                   class="white--text mt-4"
+                  depressed
                   @click="btnUpdate()"
                 >
                   <v-icon class="mr-1">mdi-content-save-outline</v-icon>
-                  <span class="text-capitalize">Yadda saxla</span>
+                  Yadda saxla
                 </v-btn>
               </v-col>
             </v-row>
@@ -56,7 +57,7 @@
       </v-card>
     </div>
     <v-card v-else>
-      <v-card-title class="headline"> İstifadəçi tapılmadı </v-card-title>
+      <v-card-title class="headline"> İstifadəçi tapılmadı</v-card-title>
     </v-card>
   </div>
 </template>

@@ -7,7 +7,13 @@ import {ModelUser, ModelUserQueryParams} from '~/models/user/User'
 import {ModelEnumGenderType, ModelEnumStatusType} from '~/models/enum/Enum'
 import {ModelPaginationOptions} from '~/models/general/General'
 // Stores
-import {FETCH_USERS, GET_USERS, GET_USERS_PAGINATION_OPTIONS} from '~/store/user/types'
+import {
+  FETCH_CREATE_USER,
+  FETCH_USERS,
+  GET_CREATE_USER,
+  GET_USERS,
+  GET_USERS_PAGINATION_OPTIONS
+} from '~/store/user/types'
 // Enums
 import {EnumGenderType, EnumStatusType} from '~/enums'
 
@@ -18,6 +24,8 @@ class UserList extends Vue {
   // region Refs
 
   @Ref('formValidationFilter') refFormValidationFilter!: HTMLFormElement
+
+  @Ref('formValidationCreateUser') refFormValidationCreateUser!: HTMLFormElement
 
   // endregion
 
@@ -31,6 +39,14 @@ class UserList extends Vue {
 
   @Provide() queryParams: ModelUserQueryParams = {}
 
+  @Provide() dialog: any = {
+    createUser: false
+  }
+
+  @Provide() formValidationCreateUser: boolean = false
+
+  @Provide() requestCreateUser: ModelUser = {}
+
   // endregion
 
   // region Store
@@ -38,6 +54,9 @@ class UserList extends Vue {
   @Action(FETCH_USERS, {namespace: 'user'}) fetchUsers!: any
   @Getter(GET_USERS, {namespace: 'user'}) getUsers!: ModelUser[]
   @Getter(GET_USERS_PAGINATION_OPTIONS, {namespace: 'user'}) getUsersPaginationOptions!: ModelPaginationOptions
+
+  @Action(FETCH_CREATE_USER, {namespace: 'user'}) fetchCreateUser!: any
+  @Getter(GET_CREATE_USER, {namespace: 'user'}) getCreateUser!: ModelUser
 
   // endregion
 
@@ -54,6 +73,12 @@ class UserList extends Vue {
   btnResetFilter() {
     this.refFormValidationFilter.reset()
     this.triggerFetchUsers()
+  }
+
+  btnCreateUser() {
+    if (this.refFormValidationCreateUser.validate()) {
+      this.fetchCreateUser(this.requestCreateUser)
+    }
   }
 
   // endregion
@@ -104,6 +129,22 @@ class UserList extends Vue {
   changePage(page: number) {
     this.queryParams.page = page
     this.triggerFetchUsers(this.queryParams)
+  }
+
+  @Watch('getCreateUser')
+  responseCreateUser() {
+    this.triggerFetchUsers(this.queryParams)
+    this.refFormValidationCreateUser.reset()
+    this.$notifier.show({
+      content: 'Yeni istifadəçi əlavə edildi',
+      duration: 3000,
+      type: 'success',
+      placement: {
+        right: true,
+        top: true
+      }
+    })
+    this.dialog.createUser = false
   }
 
   // endregion

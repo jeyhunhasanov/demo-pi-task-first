@@ -55,13 +55,13 @@ export const actions: ActionTree<State, any> = {
         })
     })
   },
-  [FETCH_CREATE_USER]: (context: ActionContext<State, any>, requestPayload: any) => {
+  [FETCH_CREATE_USER]: (context: ActionContext<State, any>, requestPayload: ModelUser) => {
     return new Promise(() => {
       $http
         .request({
           method: 'POST',
-          url: `/users/${requestPayload.userId}` as any,
-          data: requestPayload.body
+          url: `/users` as any,
+          data: requestPayload
         })
         .then((response: TypedAxiosResponse<any, any, any>) => {
           const data = response.data as ModelUser

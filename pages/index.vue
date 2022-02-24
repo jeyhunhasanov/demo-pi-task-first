@@ -1,7 +1,72 @@
 <template>
   <div>
     <v-card>
-      <v-card-title class="headline"> İstifadəçilər ({{ paginationTotal }})</v-card-title>
+      <v-card-title class="headline">
+        İstifadəçilər ({{ paginationTotal }})
+        <v-spacer />
+        <v-btn :color="$colors.green" dark depressed @click="dialog.createUser = true">
+          <v-icon class="mr-1">mdi-account-plus-outline</v-icon>
+          Yeni istifadəçi
+        </v-btn>
+        <v-dialog v-model="dialog.createUser" max-width="400" width="100%">
+          <v-card>
+            <v-card-title>
+              Yeni istifadəçi
+              <v-spacer />
+              <v-btn depressed icon @click="dialog.createUser = false">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </v-card-title>
+            <v-card-text>
+              <v-form
+                ref="formValidationCreateUser"
+                v-model="formValidationCreateUser"
+                class="formValidationCreateUser"
+                lazy-validation
+              >
+                <v-text-field
+                  v-model="requestCreateUser.name"
+                  :color="$colors.green"
+                  :rules="[...validations.required]"
+                  dense
+                  label="Ad"
+                  outlined
+                />
+                <v-text-field
+                  v-model="requestCreateUser.email"
+                  :color="$colors.green"
+                  :rules="[...validations.required, ...validations.email]"
+                  dense
+                  label="Email"
+                  outlined
+                />
+                <div>Cins</div>
+                <v-radio-group v-model="requestCreateUser.gender" :rules="[...validations.required]" dense row>
+                  <v-radio :color="$colors.green" :value="enumGenderType.MALE" label="Kişi" />
+                  <v-radio :color="$colors.green" :value="enumGenderType.FEMALE" label="Qadın" />
+                </v-radio-group>
+                <div>Status</div>
+                <v-radio-group v-model="requestCreateUser.status" :rules="[...validations.required]" dense row>
+                  <v-radio :color="$colors.green" :value="enumStatusType.ACTIVE" label="Aktiv" />
+                  <v-radio :color="$colors.green" :value="enumStatusType.INACTIVE" label="Passiv" />
+                </v-radio-group>
+                <div class="text-right">
+                  <v-btn
+                    :color="$colors.green"
+                    :disabled="!formValidationCreateUser"
+                    :loading="sendingRequest"
+                    class="white--text"
+                    depressed
+                    @click="btnCreateUser()"
+                  >
+                    Əlavə et
+                  </v-btn>
+                </div>
+              </v-form>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+      </v-card-title>
     </v-card>
     <v-card class="mt-5">
       <v-card-text>
@@ -46,13 +111,19 @@
               </v-radio-group>
             </v-col>
             <v-col cols="12" md="3" sm="6">
-              <v-btn :color="$colors.green" :loading="sendingRequest" class="white--text" @click="btnFilter()">
+              <v-btn
+                :color="$colors.green"
+                :loading="sendingRequest"
+                class="white--text"
+                depressed
+                @click="btnFilter()"
+              >
                 <v-icon class="mr-1">mdi-filter-outline</v-icon>
-                <span class="text-capitalize">Axtar</span>
+                Axtar
               </v-btn>
-              <v-btn @click="btnResetFilter()">
+              <v-btn depressed @click="btnResetFilter()">
                 <v-icon class="mr-1">mdi-filter-remove-outline</v-icon>
-                <span class="text-capitalize">Təmizlə</span>
+                Təmizlə
               </v-btn>
             </v-col>
           </v-row>
@@ -98,7 +169,15 @@
                 <td>
                   <v-tooltip left>
                     <template #activator="{on, attrs}">
-                      <v-btn :to="`/users/${userItem.id}`" :color="$colors.green" dark v-bind="attrs" x-small v-on="on">
+                      <v-btn
+                        :color="$colors.green"
+                        :to="`/users/${userItem.id}`"
+                        dark
+                        depressed
+                        v-bind="attrs"
+                        x-small
+                        v-on="on"
+                      >
                         <v-icon small>mdi-pencil</v-icon>
                       </v-btn>
                     </template>
@@ -106,7 +185,7 @@
                   </v-tooltip>
                   <v-tooltip right>
                     <template #activator="{on, attrs}">
-                      <v-btn :color="$colors.red" dark v-bind="attrs" x-small v-on="on">
+                      <v-btn :color="$colors.red" dark depressed v-bind="attrs" x-small v-on="on">
                         <v-icon small>mdi-delete</v-icon>
                       </v-btn>
                     </template>
@@ -117,7 +196,7 @@
             </tbody>
             <tbody v-else>
               <tr>
-                <td colspan="6" class="text-center">Məlumat yoxdur.</td>
+                <td class="text-center" colspan="6">Məlumat yoxdur.</td>
               </tr>
             </tbody>
           </template>
