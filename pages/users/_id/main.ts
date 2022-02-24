@@ -33,7 +33,12 @@ class UserDetails extends Vue {
 
   @Provide() enumStatusType: ModelEnumStatusType = EnumStatusType
 
-  @Provide() requestUserDetails: ModelUser = {}
+  @Provide() requestUserDetails: ModelUser = {
+    name: '',
+    email: '',
+    gender: '',
+    status: ''
+  }
 
   @Provide() formValidationUpdate: boolean = false
 
@@ -79,8 +84,10 @@ class UserDetails extends Vue {
 
   @Watch('getUserDetails')
   responseUserDetails(userDetails: ModelUser) {
-    this.requestUserDetails = {...userDetails}
-    delete this.requestUserDetails.id
+    this.requestUserDetails.name = userDetails.name
+    this.requestUserDetails.email = userDetails.email
+    this.requestUserDetails.gender = userDetails.gender
+    this.requestUserDetails.status = userDetails.status
   }
 
   @Watch('getUpdateUser')

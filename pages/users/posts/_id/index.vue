@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="Object.values(requestPostDetails).length">
+    <div v-if="requestPostDetails.title">
       <v-card>
         <v-card-title class="headline"> Məqalə - {{ requestPostDetails.title }}</v-card-title>
       </v-card>

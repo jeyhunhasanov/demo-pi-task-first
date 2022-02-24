@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="Object.values(requestUserDetails).length">
+    <div v-if="requestUserDetails.name">
       <v-card>
         <v-card-title class="headline"> İstifadəçi - {{ requestUserDetails.name }}</v-card-title>
       </v-card>
