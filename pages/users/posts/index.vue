@@ -63,7 +63,15 @@
                   <td>
                     <v-tooltip left>
                       <template #activator="{on, attrs}">
-                        <v-btn :color="$colors.green" dark depressed v-bind="attrs" x-small v-on="on">
+                        <v-btn
+                          :color="$colors.green"
+                          :to="`/users/posts/${postItem.id}`"
+                          dark
+                          depressed
+                          v-bind="attrs"
+                          x-small
+                          v-on="on"
+                        >
                           <v-icon small>mdi-pencil</v-icon>
                         </v-btn>
                       </template>
