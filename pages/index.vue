@@ -4,7 +4,7 @@
       <v-card-title class="headline">
         İstifadəçilər ({{ paginationTotal }})
         <v-spacer />
-        <v-btn :color="$colors.green" dark depressed @click="dialog.createUser = true">
+        <v-btn :color="$colors.green" class="my-3 my-sm-0" dark depressed @click="dialog.createUser = true">
           <v-icon class="mr-1">mdi-account-plus-outline</v-icon>
           Yeni istifadəçi
         </v-btn>
@@ -236,7 +236,7 @@
               @input="changePage"
             />
           </v-col>
-          <v-col cols="2">
+          <v-col cols="7" sm="4" md="2">
             <v-autocomplete
               v-model="page"
               :color="$colors.green"

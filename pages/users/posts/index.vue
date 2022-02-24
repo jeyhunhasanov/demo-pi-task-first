@@ -6,7 +6,13 @@
           <strong>{{ userDetails.name }}</strong>
           &nbsp;adlı istifadəçinin məqalələri ({{ paginationTotal }})
           <v-spacer />
-          <v-btn :color="$colors.green" :to="`/users/posts/new?userId=${userDetails.id}`" dark depressed>
+          <v-btn
+            :color="$colors.green"
+            :to="`/users/posts/new?userId=${userDetails.id}`"
+            class="my-3 my-sm-0"
+            dark
+            depressed
+          >
             <v-icon class="mr-1">mdi-text-box-plus-outline</v-icon>
             Yeni məqalə
           </v-btn>
@@ -118,7 +124,7 @@
                 @input="changePage"
               />
             </v-col>
-            <v-col cols="2">
+            <v-col cols="7" sm="4" md="2">
               <v-autocomplete
                 v-model="page"
                 :color="$colors.green"

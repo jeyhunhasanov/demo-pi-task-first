@@ -8,7 +8,7 @@
         <v-card-text>
           <v-form ref="formValidationUpdate" v-model="formValidationUpdate" lazy-validation>
             <v-row align="center">
-              <v-col cols="12" md="3" sm="6">
+              <v-col cols="12" lg="3" md="4" sm="7">
                 <v-text-field
                   v-model="requestUserDetails.name"
                   :color="$colors.green"
