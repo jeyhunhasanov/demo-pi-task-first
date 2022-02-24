@@ -5,6 +5,11 @@
         <v-card-title class="headline">
           <strong>{{ userDetails.name }}</strong>
           &nbsp;adlı istifadəçinin məqalələri ({{ paginationTotal }})
+          <v-spacer />
+          <v-btn :color="$colors.green" dark depressed :to="`/users/posts/new?userId=${userDetails.id}`">
+            <v-icon class="mr-1">mdi-text-box-plus-outline</v-icon>
+            Yeni məqalə
+          </v-btn>
         </v-card-title>
       </v-card>
       <v-card class="mt-5">
