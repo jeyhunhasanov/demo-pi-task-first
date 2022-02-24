@@ -122,7 +122,7 @@ class UserPostsList extends Vue {
     return numbers
   }
 
-  get isInActiveResetFilterBtn() {
+  get isActiveResetFilterBtn() {
     return this.queryParams.title || this.queryParams.body
   }
 

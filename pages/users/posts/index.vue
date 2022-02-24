@@ -33,7 +33,7 @@
                   <v-icon class="mr-1">mdi-filter-outline</v-icon>
                   Axtar
                 </v-btn>
-                <v-btn :disabled="!isInActiveResetFilterBtn" depressed @click="btnResetFilter()">
+                <v-btn :disabled="!isActiveResetFilterBtn" depressed @click="btnResetFilter()">
                   <v-icon class="mr-1">mdi-filter-remove-outline</v-icon>
                   Təmizlə
                 </v-btn>

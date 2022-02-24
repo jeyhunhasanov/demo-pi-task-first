@@ -145,6 +145,10 @@ class UserList extends Vue {
     return numbers
   }
 
+  get isActiveResetFilterBtn() {
+    return this.queryParams.name || this.queryParams.email || this.queryParams.gender || this.queryParams.status
+  }
+
   // endregion
 
   // region Watch
