@@ -27,6 +27,7 @@
               >
                 <v-text-field
                   v-model="requestCreateUser.name"
+                  v-input-letter-case="'words'"
                   :color="$colors.green"
                   :rules="[...validations.required]"
                   dense
@@ -35,6 +36,7 @@
                 />
                 <v-text-field
                   v-model="requestCreateUser.email"
+                  v-input-letter-case="'lowercase'"
                   :color="$colors.green"
                   :rules="[...validations.required, ...validations.email]"
                   dense
@@ -87,6 +89,7 @@
             <v-col cols="12" md="3" sm="6">
               <v-text-field
                 v-model="queryParams.email"
+                v-input-letter-case="'lowercase'"
                 :color="$colors.green"
                 dense
                 hide-details

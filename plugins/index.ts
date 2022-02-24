@@ -4,6 +4,7 @@ import {EventBus} from '~/utils/eventBus'
 import ColorsServices from '~/utils/colors/ColorsServices'
 import LoadingService from '~/utils/loading/LoadingService'
 import NotifierService from '~/utils/notifier/NotifierService'
+import '../directives'
 
 Vue.prototype.$eventBus = EventBus
 Vue.prototype.$colors = new ColorsServices()

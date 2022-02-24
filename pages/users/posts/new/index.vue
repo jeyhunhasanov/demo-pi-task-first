@@ -11,6 +11,7 @@
               <v-col cols="12" md="6">
                 <v-text-field
                   v-model="requestCreatePost.title"
+                  v-input-letter-case
                   :color="$colors.green"
                   :rules="[...validations.required]"
                   dense
@@ -20,6 +21,7 @@
                 />
                 <v-textarea
                   v-model="requestCreatePost.body"
+                  v-input-letter-case
                   :color="$colors.green"
                   :rules="[...validations.required]"
                   dense

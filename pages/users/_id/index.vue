@@ -11,6 +11,7 @@
               <v-col cols="12" lg="3" md="4" sm="7">
                 <v-text-field
                   v-model="requestUserDetails.name"
+                  v-input-letter-case="'words'"
                   :color="$colors.green"
                   :rules="[...validations.required]"
                   dense
@@ -20,6 +21,7 @@
                 />
                 <v-text-field
                   v-model="requestUserDetails.email"
+                  v-input-letter-case="'lowercase'"
                   :color="$colors.green"
                   :rules="[...validations.required, ...validations.email]"
                   dense
