@@ -9,8 +9,10 @@ import {ModelPaginationOptions} from '~/models/general/General'
 // Stores
 import {
   FETCH_CREATE_USER,
+  FETCH_DELETE_USER,
   FETCH_USERS,
   GET_CREATE_USER,
+  GET_DELETE_USER,
   GET_USERS,
   GET_USERS_PAGINATION_OPTIONS
 } from '~/store/user/types'
@@ -40,12 +42,15 @@ class UserList extends Vue {
   @Provide() queryParams: ModelUserQueryParams = {}
 
   @Provide() dialog: any = {
-    createUser: false
+    createUser: false,
+    deleteUser: false
   }
 
   @Provide() formValidationCreateUser: boolean = false
 
   @Provide() requestCreateUser: ModelUser = {}
+
+  @Provide() selectedUser: ModelUser = {}
 
   // endregion
 
@@ -57,6 +62,9 @@ class UserList extends Vue {
 
   @Action(FETCH_CREATE_USER, {namespace: 'user'}) fetchCreateUser!: any
   @Getter(GET_CREATE_USER, {namespace: 'user'}) getCreateUser!: ModelUser
+
+  @Action(FETCH_DELETE_USER, {namespace: 'user'}) fetchDeleteUser!: any
+  @Getter(GET_DELETE_USER, {namespace: 'user'}) getDeleteUser!: boolean
 
   // endregion
 
@@ -79,6 +87,15 @@ class UserList extends Vue {
     if (this.refFormValidationCreateUser.validate()) {
       this.fetchCreateUser(this.requestCreateUser)
     }
+  }
+
+  btnDeletingUser(userItem: ModelUser) {
+    this.dialog.deleteUser = true
+    this.selectedUser = {...userItem}
+  }
+
+  btnDeleteUser() {
+    this.fetchDeleteUser(this.selectedUser.id)
   }
 
   // endregion
@@ -145,6 +162,21 @@ class UserList extends Vue {
       }
     })
     this.dialog.createUser = false
+  }
+
+  @Watch('getDeleteUser')
+  responseDeleteUser() {
+    this.triggerFetchUsers(this.queryParams)
+    this.$notifier.show({
+      content: `"${this.selectedUser.name}" adlı istifadəçi silindi.`,
+      duration: 3000,
+      type: 'success',
+      placement: {
+        right: true,
+        top: true
+      }
+    })
+    this.dialog.deleteUser = false
   }
 
   // endregion

@@ -8,6 +8,7 @@
           <v-icon class="mr-1">mdi-account-plus-outline</v-icon>
           Yeni istifadəçi
         </v-btn>
+        <!--    Create user dialog-->
         <v-dialog v-model="dialog.createUser" max-width="400" width="100%">
           <v-card>
             <v-card-title>
@@ -185,7 +186,15 @@
                   </v-tooltip>
                   <v-tooltip right>
                     <template #activator="{on, attrs}">
-                      <v-btn :color="$colors.red" dark depressed v-bind="attrs" x-small v-on="on">
+                      <v-btn
+                        :color="$colors.red"
+                        dark
+                        depressed
+                        v-bind="attrs"
+                        x-small
+                        @click="btnDeletingUser(userItem)"
+                        v-on="on"
+                      >
                         <v-icon small>mdi-delete</v-icon>
                       </v-btn>
                     </template>
@@ -226,6 +235,23 @@
         </v-row>
       </v-card-text>
     </v-card>
+    <!--    Delete user dialog-->
+    <v-dialog v-model="dialog.deleteUser" max-width="425" width="100%">
+      <v-card>
+        <v-card-title>
+          <v-icon :color="$colors.red" class="mx-auto" size="50">mdi-alert-outline</v-icon>
+        </v-card-title>
+        <v-card-text>
+          Ad: <strong>{{ selectedUser.name }}m</strong> <br />
+          Email: <strong>{{ selectedUser.email }}</strong> <br />
+          istifadəçini silmək istədiyinizdən əminsinizmi?
+          <div class="mt-7">
+            <v-btn depressed @click="dialog.deleteUser = false">Xeyr</v-btn>
+            <v-btn :color="$colors.red" :loading="sendingRequest" dark depressed @click="btnDeleteUser()">Bəli</v-btn>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
