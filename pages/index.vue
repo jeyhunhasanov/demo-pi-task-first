@@ -200,6 +200,22 @@
                     </template>
                     <span>Sil</span>
                   </v-tooltip>
+                  <v-tooltip right>
+                    <template #activator="{on, attrs}">
+                      <v-btn
+                        :color="$colors.blue"
+                        :to="`/users/posts?userId=${userItem.id}`"
+                        dark
+                        depressed
+                        v-bind="attrs"
+                        x-small
+                        v-on="on"
+                      >
+                        <v-icon small>mdi-text-box-multiple-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Məqalələr</span>
+                  </v-tooltip>
                 </td>
               </tr>
             </tbody>
