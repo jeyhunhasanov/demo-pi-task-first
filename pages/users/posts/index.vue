@@ -4,7 +4,7 @@
       <v-card>
         <v-card-title class="headline">
           <strong>{{ userDetails.name }}</strong>
-          &nbsp;adlı istifadəçinin məqalələri
+          &nbsp;adlı istifadəçinin məqalələri ({{ paginationTotal }})
         </v-card-title>
       </v-card>
       <v-divider class="my-5" />
@@ -22,7 +22,7 @@
               <tbody v-if="posts.length">
                 <tr v-for="(postItem, postIndex) in posts" :key="postIndex">
                   <td>
-                    {{ ++postIndex }}
+                    {{ (page - 1) * paginationLimit + ++postIndex }}
                   </td>
                   <td>{{ postItem.title }}</td>
                   <td>
@@ -52,6 +52,29 @@
               </tbody>
             </template>
           </v-simple-table>
+          <v-row v-if="paginationTotal >= paginationLimit" align="center" class="my-5" justify="center">
+            <v-col cols="12">
+              <v-pagination
+                v-model="page"
+                :color="$colors.green"
+                :length="paginationPages"
+                :total-visible="paginationLimit"
+              />
+            </v-col>
+            <v-col cols="2">
+              <v-autocomplete
+                v-model="page"
+                :color="$colors.green"
+                :items="paginationPagesNumbers"
+                dense
+                height="20"
+                hide-details
+                label="Səhifə"
+                no-data-text="Yoxdur"
+                outlined
+              />
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </div>

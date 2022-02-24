@@ -1,10 +1,12 @@
-import {Action, Component, Getter, Provide, Vue} from 'nuxt-property-decorator'
+import {Action, Component, Getter, Provide, Vue, Watch} from 'nuxt-property-decorator'
 // Models
 import {ModelUser} from '~/models/user/User'
 import {ModelPost, ModelPostQueryParams} from '~/models/post/Post'
+import {ModelPaginationOptions} from '~/models/general/General'
 // Stores
 import {FETCH_USER_DETAILS, GET_USER_DETAILS} from '~/store/user/types'
-import {FETCH_POSTS, GET_POSTS} from '~/store/post/types'
+import {FETCH_POSTS, GET_POSTS, GET_POSTS_PAGINATION_OPTIONS} from '~/store/post/types'
+// Regexes
 import {REGEX_ALLOW_NUMBERS} from '~/constants/regex'
 
 @Component({
@@ -18,6 +20,10 @@ class UserPostsList extends Vue {
 
   @Provide() userId: number = 0
 
+  @Provide() page: number = 1
+
+  @Provide() queryParams: ModelPostQueryParams = {}
+
   // endregion
 
   // region Store
@@ -27,6 +33,9 @@ class UserPostsList extends Vue {
 
   @Action(FETCH_POSTS, {namespace: 'post'}) fetchPosts!: any
   @Getter(GET_POSTS, {namespace: 'post'}) getPosts!: ModelPost[]
+  @Getter(GET_POSTS_PAGINATION_OPTIONS, {namespace: 'post'}) getPostsPaginationOptions!: ModelPaginationOptions
+
+  // endregion
 
   // region Function
 
@@ -61,6 +70,40 @@ class UserPostsList extends Vue {
 
   get posts(): ModelPost[] {
     return this.getPosts as ModelPost[]
+  }
+
+  get paginationOptions() {
+    return this.getPostsPaginationOptions
+  }
+
+  get paginationPages() {
+    return this.paginationOptions.pages
+  }
+
+  get paginationLimit() {
+    return this.paginationOptions.limit
+  }
+
+  get paginationTotal() {
+    return this.paginationOptions.total
+  }
+
+  get paginationPagesNumbers() {
+    const numbers = []
+    for (let index = 1; index <= this.paginationPages; index++) {
+      numbers.push(index)
+    }
+    return numbers
+  }
+
+  // endregion
+
+  // region Watch
+
+  @Watch('page')
+  changePage(page: number) {
+    this.queryParams.page = page
+    this.triggerFetchPosts(this.queryParams)
   }
 
   // endregion

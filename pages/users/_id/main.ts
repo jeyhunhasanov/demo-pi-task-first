@@ -9,6 +9,7 @@ import {ModelEnumGenderType, ModelEnumStatusType} from '~/models/enum/Enum'
 import {FETCH_UPDATE_USER, FETCH_USER_DETAILS, GET_UPDATE_USER, GET_USER_DETAILS} from '~/store/user/types'
 // Enums
 import {EnumGenderType, EnumStatusType} from '~/enums'
+// Regexes
 import {REGEX_ALLOW_NUMBERS} from '~/constants/regex'
 
 @Component({

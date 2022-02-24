@@ -30,13 +30,15 @@ export const actions: ActionTree<State, any> = {
         })
         .then((response: TypedAxiosResponse<any, any, any>) => {
           const headers = response.headers
+          const data = response.data as ModelUser[]
+
           const paginationOptions: ModelPaginationOptions = {
             limit: Number(headers['x-pagination-limit']),
             page: Number(headers['x-pagination-page']),
             pages: Number(headers['x-pagination-pages']),
             total: Number(headers['x-pagination-total'])
           }
-          const data = response.data as ModelUser[]
+
           context.commit(SET_USERS, data)
           context.commit(SET_USERS_PAGINATION_OPTIONS, paginationOptions)
         })
