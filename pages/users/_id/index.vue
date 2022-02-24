@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="requestUserDetails.name">
+    <div v-if="hasExistingUser">
       <v-card>
         <v-card-title class="headline"> İstifadəçi - {{ requestUserDetails.name }}</v-card-title>
       </v-card>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="requestUpdatePost.title">
+    <div v-if="hasExistingPost">
       <v-card>
         <v-card-title class="headline"> Məqalə - {{ requestUpdatePost.title }}</v-card-title>
       </v-card>
@@ -48,7 +48,7 @@
       </v-card>
     </div>
     <v-card v-else>
-      <v-card-title class="headline"> Məqalə tapılmadı</v-card-title>
+      <v-card-title class="headline">Məqalə tapılmadı</v-card-title>
     </v-card>
   </div>
 </template>

@@ -42,6 +42,8 @@ class UserDetails extends Vue {
 
   @Provide() formValidationUpdate: boolean = false
 
+  @Provide() hasExistingUser: boolean = false
+
   // endregion
 
   // region Store
@@ -84,6 +86,7 @@ class UserDetails extends Vue {
 
   @Watch('getUserDetails')
   responseUserDetails(userDetails: ModelUser) {
+    this.hasExistingUser = !!userDetails.id
     this.requestUserDetails.name = userDetails.name
     this.requestUserDetails.email = userDetails.email
     this.requestUserDetails.gender = userDetails.gender

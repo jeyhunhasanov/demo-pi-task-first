@@ -33,6 +33,8 @@ class UserUpdatePost extends Vue {
 
   @Provide() formValidationUpdatePost: boolean = false
 
+  @Provide() hasExistingPost: boolean = false
+
   // endregion
 
   // region Store
@@ -75,6 +77,7 @@ class UserUpdatePost extends Vue {
 
   @Watch('getPostDetails')
   responsePostDetails(postDetails: ModelPost) {
+    this.hasExistingPost = !!postDetails.id
     this.requestUpdatePost.title = postDetails.title
     this.requestUpdatePost.body = postDetails.body
   }
