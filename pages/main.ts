@@ -75,12 +75,19 @@ class UserList extends Vue {
   }
 
   btnFilter() {
+    this.page = 1
+    this.queryParams.page = this.page
     this.triggerFetchUsers(this.queryParams)
   }
 
   btnResetFilter() {
     this.refFormValidationFilter.reset()
     this.triggerFetchUsers()
+  }
+
+  changePage(page: number) {
+    this.queryParams.page = page
+    this.triggerFetchUsers(this.queryParams)
   }
 
   btnCreateUser() {
@@ -141,12 +148,6 @@ class UserList extends Vue {
   // endregion
 
   // region Watch
-
-  @Watch('page')
-  changePage(page: number) {
-    this.queryParams.page = page
-    this.triggerFetchUsers(this.queryParams)
-  }
 
   @Watch('getCreateUser')
   responseCreateUser() {

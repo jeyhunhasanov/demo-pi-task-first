@@ -94,6 +94,7 @@
                 :color="$colors.green"
                 :length="paginationPages"
                 :total-visible="paginationLimit"
+                @input="changePage"
               />
             </v-col>
             <v-col cols="2">
@@ -107,6 +108,7 @@
                 label="Səhifə"
                 no-data-text="Yoxdur"
                 outlined
+                @change="changePage"
               />
             </v-col>
           </v-row>

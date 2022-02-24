@@ -1,4 +1,4 @@
-import {Action, Component, Getter, Provide, Ref, Vue, Watch} from 'nuxt-property-decorator'
+import {Action, Component, Getter, Provide, Ref, Vue} from 'nuxt-property-decorator'
 // Mixins
 import LoadingMixin from '~/mixins/LoadingMixin'
 import ValidationsMixin from '~/mixins/ValidationsMixin'
@@ -62,12 +62,18 @@ class UserPostsList extends Vue {
 
   btnFilter() {
     this.page = 1
+    this.queryParams.page = this.page
     this.triggerFetchPosts(this.queryParams)
   }
 
   btnResetFilter() {
     this.refFormValidationFilter.reset()
     this.triggerFetchPosts()
+  }
+
+  changePage(page: number) {
+    this.queryParams.page = page
+    this.triggerFetchPosts(this.queryParams)
   }
 
   // endregion
@@ -118,16 +124,6 @@ class UserPostsList extends Vue {
 
   get isInActiveResetFilterBtn() {
     return this.queryParams.title || this.queryParams.body
-  }
-
-  // endregion
-
-  // region Watch
-
-  @Watch('page')
-  changePage(page: number) {
-    this.queryParams.page = page
-    this.triggerFetchPosts(this.queryParams)
   }
 
   // endregion
