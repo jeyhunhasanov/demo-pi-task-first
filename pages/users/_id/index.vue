@@ -31,13 +31,11 @@
                 />
                 <div>Cins</div>
                 <v-radio-group v-model="requestUserDetails.gender" :rules="[...validations.required]" dense row>
-                  <v-radio :color="$colors.green" :value="null" label="Hamısı" />
                   <v-radio :color="$colors.green" :value="enumGenderType.MALE" label="Kişi" />
                   <v-radio :color="$colors.green" :value="enumGenderType.FEMALE" label="Qadın" />
                 </v-radio-group>
                 <div>Status</div>
                 <v-radio-group v-model="requestUserDetails.status" :rules="[...validations.required]" dense row>
-                  <v-radio :color="$colors.green" :value="null" label="Hamısı" />
                   <v-radio :color="$colors.green" :value="enumStatusType.ACTIVE" label="Aktiv" />
                   <v-radio :color="$colors.green" :value="enumStatusType.INACTIVE" label="Passiv" />
                 </v-radio-group>
