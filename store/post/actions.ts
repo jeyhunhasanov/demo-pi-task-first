@@ -5,19 +5,17 @@ import {State} from './state'
 import {
   FETCH_CREATE_POST,
   FETCH_DELETE_POST,
-  FETCH_UPDATE_POST,
   FETCH_POST_DETAILS,
   FETCH_POSTS,
+  FETCH_UPDATE_POST,
   SET_CREATE_POST,
-  SET_UPDATE_POST,
+  SET_DELETE_POST,
   SET_POST_DETAILS,
   SET_POSTS,
-  SET_DELETE_POST,
-  SET_POSTS_PAGINATION_OPTIONS
+  SET_UPDATE_POST
 } from './types'
 import $http from '@/api/index'
 import {ModelPost} from '~/models/post/Post'
-import {ModelPaginationOptions} from '~/models/general/General'
 
 export const actions: ActionTree<State, any> = {
   [FETCH_POSTS]: (context: ActionContext<State, any>, requestPayload: any) => {
@@ -29,18 +27,8 @@ export const actions: ActionTree<State, any> = {
           params: requestPayload.params
         })
         .then((response: TypedAxiosResponse<any, any, any>) => {
-          const headers = response.headers
           const data = response.data as ModelPost[]
-
-          const paginationOptions: ModelPaginationOptions = {
-            limit: Number(headers['x-pagination-limit']),
-            page: Number(headers['x-pagination-page']),
-            pages: Number(headers['x-pagination-pages']),
-            total: Number(headers['x-pagination-total'])
-          }
-
           context.commit(SET_POSTS, data)
-          context.commit(SET_POSTS_PAGINATION_OPTIONS, paginationOptions)
         })
     })
   },

@@ -1,23 +1,12 @@
 import {GetterTree} from 'vuex'
 
 import {State} from './state'
-import {
-  GET_CREATE_POST,
-  GET_DELETE_POST,
-  GET_UPDATE_POST,
-  GET_POST_DETAILS,
-  GET_POSTS,
-  GET_POSTS_PAGINATION_OPTIONS
-} from './types'
+import {GET_CREATE_POST, GET_DELETE_POST, GET_POST_DETAILS, GET_POSTS, GET_UPDATE_POST} from './types'
 import {ModelPost} from '~/models/post/Post'
-import {ModelPaginationOptions} from '~/models/general/General'
 
 export const getters: GetterTree<State, any> = {
   [GET_POSTS](state: State): ModelPost[] {
     return state.posts
-  },
-  [GET_POSTS_PAGINATION_OPTIONS](state: State): ModelPaginationOptions {
-    return state.postsPaginationOptions
   },
   [GET_POST_DETAILS](state: State): ModelPost {
     return state.postDetails

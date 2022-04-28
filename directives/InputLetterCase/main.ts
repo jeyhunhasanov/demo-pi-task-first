@@ -1,7 +1,7 @@
 const InputCapitalize = {
   bind: (el: any, binding: any) => {
     el.addEventListener('keyup', (event: any) => {
-      event = !(!event && !window.event)
+      event = event || window.event
       const value = event.target.value
       if (binding.value === 'uppercase') {
         event.target.value = value.toUpperCase()

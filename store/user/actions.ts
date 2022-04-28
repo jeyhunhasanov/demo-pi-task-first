@@ -12,12 +12,10 @@ import {
   SET_DELETE_USER,
   SET_UPDATE_USER,
   SET_USER_DETAILS,
-  SET_USERS,
-  SET_USERS_PAGINATION_OPTIONS
+  SET_USERS
 } from './types'
 import $http from '@/api/index'
 import {ModelUser, ModelUserQueryParams} from '~/models/user/User'
-import {ModelPaginationOptions} from '~/models/general/General'
 
 export const actions: ActionTree<State, any> = {
   [FETCH_USERS]: (context: ActionContext<State, any>, queryParams: ModelUserQueryParams) => {
@@ -29,18 +27,8 @@ export const actions: ActionTree<State, any> = {
           params: queryParams
         })
         .then((response: TypedAxiosResponse<any, any, any>) => {
-          const headers = response.headers
           const data = response.data as ModelUser[]
-
-          const paginationOptions: ModelPaginationOptions = {
-            limit: Number(headers['x-pagination-limit']),
-            page: Number(headers['x-pagination-page']),
-            pages: Number(headers['x-pagination-pages']),
-            total: Number(headers['x-pagination-total'])
-          }
-
           context.commit(SET_USERS, data)
-          context.commit(SET_USERS_PAGINATION_OPTIONS, paginationOptions)
         })
     })
   },

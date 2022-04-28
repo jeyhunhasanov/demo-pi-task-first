@@ -3,6 +3,8 @@ import restypedAxios, {TypedAxiosRequestConfig} from 'restyped-axios'
 import {API} from './project-api'
 import {EventBus} from '@/utils/eventBus'
 import NotifierService from '@/utils/notifier/NotifierService'
+import StoreServices from '@/utils/store/StoreServices'
+import {ModelPaginationOptions} from '~/models/general/General'
 
 const BASE_URL = process.env.BASE_URL
 
@@ -12,6 +14,7 @@ const instance = restypedAxios.create<API>({
 })
 
 const $notifier = new NotifierService()
+const $store = new StoreServices()
 
 // region Interceptors
 
@@ -38,6 +41,17 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     EventBus.$emit('loading:disable')
+
+    const headers = response.headers
+
+    const paginationOptions: ModelPaginationOptions = {
+      limit: Number(headers['x-pagination-limit']),
+      page: Number(headers['x-pagination-page']),
+      pages: Number(headers['x-pagination-pages']),
+      total: Number(headers['x-pagination-total'])
+    }
+
+    $store.dispatch('paginationOptions/FETCH_PAGINATION_OPTIONS', paginationOptions)
     return response
   },
   (error) => {
